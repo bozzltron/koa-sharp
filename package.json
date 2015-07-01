@@ -1,7 +1,7 @@
 {
   "name": "enliten-resizer",
   "version": "1.0.0",
-  "description": "Resize images with image-resize",
+  "description": "Resize images on the fly with sharp",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
