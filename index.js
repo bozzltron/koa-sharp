@@ -17,23 +17,6 @@ function getSnapshot(callback) {
         
         // Makes sure that the image comes back as a buffer
         request.defaults({ encoding: null });
-        // request('http://enliten-manet.herokuapp.com?url=' + this.query.url, function(error, response, buffer) {
-                
-        //     if(error) {
-        //         console.log("request error ", error);
-        //     }
-
-        //     if (!error && response.statusCode == 200) {
-        //         console.log("received buffer.. processing...");
-        //         console.log("type of buffer ", typeof buffer);
-        //         console.log("is response a buffer", Buffer.isBuffer(buffer));
-        //         console.log("create buffer", Buffer.isBuffer(new Buffer(buffer, 'binary')));
-               
-
-
-
-        //     }
-        // })
 
         var transform = sharp()
           .resize(400, 400)
@@ -53,7 +36,6 @@ function getSnapshot(callback) {
         request('http://enliten-manet.herokuapp.com?url=' + this.query.url).pipe(transform);  
 
     }
-
 
 }
 
