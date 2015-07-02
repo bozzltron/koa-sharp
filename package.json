@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "Resize images on the fly with sharp",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
+  "author": "bozzltron",
   "license": "ISC",
+  "engines": {
+    "node": "0.12.x"
+},
   "dependencies": {
     "koa": "^0.21.0",
     "koa-routing": "^1.3.1",
