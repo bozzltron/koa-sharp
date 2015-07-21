@@ -1,22 +1,24 @@
 FROM heroku/cedar:14
 
 # Install dependencies
-RUN apt-get update && \
+RUN \
+  apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
   automake build-essential curl \
-  gobject-introspection gtk-doc-tools libglib2.0-dev libjpeg-turbo8-dev libpng12-dev libtiff5-dev libexif-dev libxml2-dev swig libmagickwand-dev
+  gobject-introspection gtk-doc-tools libglib2.0-dev libjpeg-turbo8-dev libpng12-dev libwebp-dev libtiff5-dev libexif-dev libxml2-dev swig libmagickwand-dev
 
 # Build libvips
-WORKDIR /tmp
-ENV LIBVIPS_VERSION_MAJOR 7
-ENV LIBVIPS_VERSION_MINOR 42
-ENV LIBVIPS_VERSION_PATCH 3
+RUN mkdir -p /app/heroku/libvips
+WORKDIR /app/heroku/libvips
+ENV LIBVIPS_VERSION_MAJOR 8
+ENV LIBVIPS_VERSION_MINOR 0
+ENV LIBVIPS_VERSION_PATCH 2
 ENV LIBVIPS_VERSION $LIBVIPS_VERSION_MAJOR.$LIBVIPS_VERSION_MINOR.$LIBVIPS_VERSION_PATCH
 RUN \
   curl -O http://www.vips.ecs.soton.ac.uk/supported/$LIBVIPS_VERSION_MAJOR.$LIBVIPS_VERSION_MINOR/vips-$LIBVIPS_VERSION.tar.gz && \
   tar zvxf vips-$LIBVIPS_VERSION.tar.gz && \
   cd vips-$LIBVIPS_VERSION && \
-  ./configure CFLAGS="-fPIC" CXXFLAGS="-fPIC" --without-webp  --enable-static --disable-shared --enable-debug=no --without-python --without-orc --without-fftw --without-gsf $1 && \
+  ./configure --enable-debug=no --without-python --without-orc --without-fftw --without-gsf $1 && \
   make && \
   make install && \
   ldconfig
@@ -40,21 +42,16 @@ RUN npm install sharp
 
 # Clean up
 WORKDIR /
-RUN apt-get remove -y curl automake build-essential && \
+RUN apt-get remove -y curl automake && \
     apt-get autoremove -y && \
     apt-get autoclean && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# RUN useradd -d /app -m app
-# USER app
-# WORKDIR /app
-
-ENV HOME /app
 ENV PORT 3000
+EXPOSE 3000
 
 WORKDIR /app/src
 
 ONBUILD COPY . /app/src
-ONBUILD RUN npm install
-ONBUILD EXPOSE 3000
+ONBUILD RUN npm install -d
