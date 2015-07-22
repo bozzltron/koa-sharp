@@ -10,7 +10,6 @@
   },
   "scripts" :{
       "start": "node --harmony",
-      "preinstall": "npm install -g sharp"
   },
   "dependencies": {
     "koa": "^0.21.0",
