@@ -9,7 +9,7 @@
     "node": "0.12.x"
   },
   "scripts" :{
-      "start": "node --harmony",
+      "start": "node --harmony"
   },
   "dependencies": {
     "koa": "^0.21.0",
