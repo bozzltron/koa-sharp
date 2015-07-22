@@ -1,7 +1,7 @@
 {
   "name": "enliten-resizer",
   "version": "1.0.0",
-  "description": "Resize images on the fly with sharp",
+  "description": "Resize images on the fly with sharp.",
   "main": "index.js",
   "author": "bozzltron",
   "license": "ISC",
