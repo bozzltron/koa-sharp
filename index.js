@@ -22,6 +22,7 @@ function getSnapshot(callback) {
           .resize(400, 400)
           .crop(sharp.gravity.north)
           .png()
+          .quality(95)
           .toBuffer(function(err, outputBuffer, info) {
             if (err) {
               throw err;
