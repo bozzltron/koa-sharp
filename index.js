@@ -14,7 +14,7 @@ function getSnapshot(callback) {
         callback("query parameters are required!", null);
     } else {
         console.log("requesting screenshot...");
-        
+
         // Makes sure that the image comes back as a buffer
         request.defaults({ encoding: null });
 
@@ -33,7 +33,7 @@ function getSnapshot(callback) {
             callback(null, outputBuffer);
           });
 
-        request('http://enliten-manet.herokuapp.com?url=' + this.query.url).pipe(transform);  
+        request('http://enliten-manet.herokuapp.com?url=' + this.query.url).pipe(transform);
 
     }
 
@@ -45,7 +45,8 @@ app.route('/query')
         console.log("query", this.query);
         this.type = 'image/png';
         this.body = yield getSnapshot;
-
+        console.log(this);
+        this.set('Text-Encoding','ISO-8859-1' );
     });
 
 app.listen(process.env.PORT || 3000);
