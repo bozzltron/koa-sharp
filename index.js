@@ -22,7 +22,7 @@ function getSnapshot(callback) {
           .resize(400, 400)
           .crop(sharp.gravity.north)
           .png()
-          .quality(95)
+          .quality(100)
           .toBuffer(function(err, outputBuffer, info) {
             if (err) {
               throw err;
@@ -34,7 +34,7 @@ function getSnapshot(callback) {
             callback(null, outputBuffer);
           });
 
-        request('http://enliten-manet.herokuapp.com?url=' + this.query.url).pipe(transform);
+        request('http://enliten-manet.herokuapp.com?quality=1&url=' + this.query.url).pipe(transform);
 
     }
 
