@@ -28,6 +28,8 @@ function getSnapshot(callback) {
         var height = this.query.height ? parseInt(this.query.height, 10) : 400;
         var src = this.query.src || 'http://enliten-manet.herokuapp.com';
 
+        console.log("config", width, height, src);
+
         var transform = sharp()
           .resize(width, height)
           .crop(sharp.gravity.north)
@@ -44,11 +46,15 @@ function getSnapshot(callback) {
             callback(null, outputBuffer);
           });
 
-        request(src + '?' + params({
+        var options = params({
             quality: 1,
             width:1280,
             url: this.query.url
-        })).pipe(transform);
+        });
+
+        console.log("options", options);
+
+        request(src + '?' + options).pipe(transform);
 
     }
 
