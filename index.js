@@ -8,6 +8,12 @@ var koa = require('koa'),
 // Setup routing
 app.use(routing(app));
 
+function params (obj) {
+    return _.map(obj, function(value, key) {
+        return key + "=" + value;
+    }).join("&");
+}
+
 function getSnapshot(callback) {
 
     if (!this.query) {
@@ -18,8 +24,12 @@ function getSnapshot(callback) {
         // Makes sure that the image comes back as a buffer
         request.defaults({ encoding: null });
 
+        var width = this.query.width ? parseInt(this.query.width, 10) : 400;
+        var height = this.query.height ? parseInt(this.query.height, 10) : 400;
+        var src = this.query.src || 'http://enliten-manet.herokuapp.com';
+
         var transform = sharp()
-          .resize(400, 400)
+          .resize(width, height)
           .crop(sharp.gravity.north)
           .png()
           .quality(100)
@@ -34,7 +44,11 @@ function getSnapshot(callback) {
             callback(null, outputBuffer);
           });
 
-        request('http://enliten-manet.herokuapp.com?quality=1&url=' + this.query.url).pipe(transform);
+        request(src + '?' + params({
+            quality: 1,
+            width:1280,
+            url: this.query.url
+        })).pipe(transform);
 
     }
 
