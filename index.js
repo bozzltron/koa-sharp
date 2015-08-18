@@ -3,7 +3,8 @@ var koa = require('koa'),
     routing = require('koa-routing'),
     sharp = require('sharp'),
     request = require('request'),
-    stream = require('stream');
+    stream = require('stream'),
+    _ = require('underscore');
 
 // Setup routing
 app.use(routing(app));
